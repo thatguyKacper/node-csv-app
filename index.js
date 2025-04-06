@@ -1,4 +1,4 @@
-import { writeFileSync } from 'fs'
+import { appendFileSync } from 'fs'
 import { createInterface } from 'readline'
 
 const content = 'Test content'
@@ -11,9 +11,20 @@ const readline = createInterface({
 const readLineAsync = (message) =>
   new Promise((resolve) => readline.question(message, resolve))
 
-try {
-  writeFileSync('./test.txt', content)
-  console.log('Success!')
-} catch (err) {
-  console.error(err)
+class Person {
+  constructor(name = '', number = '', email = '') {
+    this.name = name
+    this.number = number
+    this.email = email
+  }
+
+  saveToCSV() {
+    const content = `${this.name},${this.number},${this.email}\n`
+    try {
+      appendFileSync('./contacts.csv', content)
+      console.log(`${this.name} Saved!`)
+    } catch (err) {
+      console.error(err)
+    }
+  }
 }
